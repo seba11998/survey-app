@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ResultadosRepository } from './resultados.repository';
+import { ResultsRepository } from './results.repository';
 
 @Injectable()
-export class ResultadosService {
+export class ResultsService {
   constructor(
-    @InjectRepository(ResultadosRepository)
-    private readonly resultadosRepository: ResultadosRepository,
+    @InjectRepository(ResultsRepository)
+    private readonly resultadosRepository: ResultsRepository,
   ) {}
 
   async getAllResults(): Promise<any[]> {

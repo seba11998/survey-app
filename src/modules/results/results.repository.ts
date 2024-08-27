@@ -1,10 +1,9 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { ResultadosEntity } from './resultados.entity';
+import { ResultsEntity } from './results.entity';
 
-@EntityRepository(ResultadosEntity)
-export class ResultadosRepository extends Repository<ResultadosEntity> {
-  // Custom methods
-  async findAllResults(): Promise<ResultadosEntity[]> {
+@EntityRepository(ResultsEntity)
+export class ResultsRepository extends Repository<ResultsEntity> {
+  async findAllResults(): Promise<ResultsEntity[]> {
     return this.createQueryBuilder('encuesta_entity')
       .select('encuesta_entity.estiloMusical')
       .addSelect('COUNT(encuesta_entity.estiloMusical)', 'count')

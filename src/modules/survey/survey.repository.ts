@@ -1,9 +1,8 @@
 import { EntityRepository, Repository } from 'typeorm';
-import { EncuestaEntity } from './encuesta.entity';
+import { SurveyEntity } from './survey.entity';
 
-@EntityRepository(EncuestaEntity)
-export class EncuestaRepository extends Repository<EncuestaEntity> {
-  // Custom methods
+@EntityRepository(SurveyEntity)
+export class SurveyRepository extends Repository<SurveyEntity> {
   async findPopularStyles(): Promise<any[]> {
     return this.createQueryBuilder('encuesta_entity')
       .select('encuesta_entity.estiloMusical')

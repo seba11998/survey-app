@@ -1,13 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class EncuestaEntity {
+export class ResultsEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  email: string;
+  estiloMusical: string;
 
   @Column()
-  estiloMusical: string;
+  count: number;
 }

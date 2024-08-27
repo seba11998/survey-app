@@ -1,17 +1,18 @@
 angular.module('myApp', [])
-  .controller('EncuestaCtrl', function ($scope, $http) {
+  .controller('EncuestaCtrl', function ($scope, $http, $timeout) {
 
     // Cargar los géneros musicales desde el archivo JSON
-    $http.get('estilos.json')
+    $http.get('genres.json')
       .then(function (response) {
-        console.log("Géneros cargados:", response.data); // Depuración
-        $scope.estilos = response.data;
+        console.log("Genres loaded:", response.data); // Depuración
+        $scope.styles = response.data;
+        $scope.selectedOption = null;
       })
       .catch(function (error) {
-        console.error("Error al cargar los géneros:", error);
+        console.error("Error loading genres:", error);
       });
 
-    $scope.encuesta = {
+    $scope.survey = {
       email: "",
       estiloMusical: ""
     };
@@ -19,10 +20,24 @@ angular.module('myApp', [])
     $scope.enviarEncuesta = function () {
       $http.post('http://localhost:3000/api/encuestas', $scope.encuesta)
         .then(function (response) {
-          console.log("Encuesta enviada con éxito", response);
+          console.log("Survey sent successfully", response);
+          $scope.survey = { email: "", estiloMusical: "" };
+          $scope.successMessage = "Success";
+          $timeout(function () {
+            $scope.successMessage = "";
+          }, 5000);
         })
         .catch(function (error) {
-          console.error("Error al enviar encuesta:", error);
+          console.error("Error sending survey:", error);
+          if (error.data && error.data.message === "Email already exists") {
+            $scope.errorMessage = "Email already exists";
+            $timeout(function () {
+              $scope.errorMessage = "";
+            }, 5000);
+            console.error("Email already exists");
+          } else {
+            $scope.errorMessage = "Error sending survey";
+          }
         });
     };
 
