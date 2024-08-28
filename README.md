@@ -19,7 +19,7 @@ This project is a survey application built using NestJS, TypeORM, and AngularJS 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/sramosUMayor/survey-app.git
+   git clone https://github.com/seba11998/survey-app.git
    cd survey-app
    ```
 
