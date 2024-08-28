@@ -4,6 +4,10 @@ import { Repository } from 'typeorm';
 import { SurveyEntity } from './survey.entity';
 import { isEmail } from 'class-validator';
 
+interface SurveyWithOtroEstilo extends SurveyEntity {
+  otroEstilo?: string;
+}
+
 @Injectable()
 export class SurveyService {
   constructor(
@@ -11,9 +15,13 @@ export class SurveyService {
     private surveyRepository: Repository<SurveyEntity>,
   ) {}
 
-  async create(survey: SurveyEntity): Promise<SurveyEntity> {
+  async create(survey: SurveyWithOtroEstilo): Promise<SurveyEntity> {
     if (!isEmail(survey.email)) {
       throw new HttpException('Invalid email format', HttpStatus.BAD_REQUEST);
+    }
+
+    if (survey.estiloMusical === 'Otro' && survey.otroEstilo) {
+      survey.estiloMusical = survey.otroEstilo;
     }
 
     const emailExists = await this.surveyRepository.findOne({
