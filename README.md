@@ -45,7 +45,7 @@ This project is a survey application built using NestJS, TypeORM, and AngularJS 
 
 5. Navigate to the `encuesta-front` directory and install client dependencies:
    ```bash
-   cd encuesta-front
+   cd survey-front
    npx http-client -o
    ```
 
