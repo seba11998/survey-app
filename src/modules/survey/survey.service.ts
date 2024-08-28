@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SurveyEntity } from './survey.entity';
-import { HttpException, HttpStatus } from '@nestjs/common';
 
 @Injectable()
 export class SurveyService {
@@ -21,7 +20,13 @@ export class SurveyService {
     return this.surveyRepository.save(survey);
   }
 
-  async findAndCountAll(): Promise<[SurveyEntity[], number]> {
-    return this.surveyRepository.findAndCount();
+  async getAllResults(): Promise<any> {
+    return this.surveyRepository
+      .createQueryBuilder('encuesta_entity')
+      .select('encuesta_entity.estiloMusical')
+      .addSelect('COUNT(encuesta_entity.estiloMusical)', 'count')
+      .groupBy('encuesta_entity.estiloMusical')
+      .orderBy('count', 'DESC')
+      .getRawMany();
   }
 }

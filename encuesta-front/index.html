@@ -1,88 +1,82 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="survey-front">
 
 <head>
   <title>Encuesta</title>
-  <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" />
-
-  <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
-
-  <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css" />
-
-  <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css" />
-  <link rel="stylesheet" type="text/css" href="css/util.css" />
-  <link rel="stylesheet" type="text/css" href="css/main.css" />
-  <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="fonts/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="vendor/animate/animate.css" rel="stylesheet" type="text/css" />
+  <link href="vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" type="text/css" />
+  <link href="css/util.css" rel="stylesheet" type="text/css" />
+  <link href="css/main.css" rel="stylesheet" type="text/css" />
+  <link href="vendor/select2/select2.min.css" rel="stylesheet" type="text/css" />
+  <script src="vendor/angular/angular.min.js"></script>
+  <script src="vendor/chart/chart.js"></script>
   <script src="app.js"></script>
   <style>
-      .error-button {
-          background-color: red !important;
-      }
-      .success-button {
-          background-color: green !important;
-      }
+
   </style>
 </head>
 
 <body ng-controller="EncuestaCtrl">
 <div class="music1">
-  <div class="container-music1">
-    <div class="music1-pic js-tilt" data-tilt>
-      <img src="images/img-01.png" alt="IMG" />
+  <div class="container-music1 grow-animation">
+    <div class="music1-pic js-tilt" data-tilt ng-show="showForm">
+      <img alt="IMG" src="images/img-01.png" />
     </div>
 
-    <form class="music1-form validate-form" ng-submit="enviarEncuesta()">
+    <form class="music1-form validate-form" ng-show="showForm" ng-submit="enviarEncuesta()">
       <span class="music1-form-title"> Encuesta Musical</span>
 
       <div class="wrap-input1 validate-input" data-validate="Se necesita un correo válido: ex@abc.xyz">
-        <input class="input1" type="text" name="email" placeholder="Correo Electrónico" id="email"
-               ng-model="survey.email" required />
+        <input class="input1" id="email" name="email" ng-model="survey.email" placeholder="Correo Electrónico"
+               required type="text" />
         <span class="shadow-input1"></span>
       </div>
 
       <div class="wrap-input1 validate-input" data-validate="Se necesita un correo válido: ex@abc.xyz">
         <label for="estiloMusical" hidden="">Estilo Musical Favorito:</label>
-        <select class="input1" id="estiloMusical" ng-model="survey.estiloMusical"
-                ng-options="style for style in styles" required>
+        <select class="input1" id="estiloMusical" ng-model="survey.estiloMusical" ng-options="style for style in styles"
+                required>
           <option selected="selected" value="">Selecciona un estilo</option>
         </select>
         <span class="shadow-input1"></span>
       </div>
 
       <div class="wrap-input1 validate-input" ng-show="survey.estiloMusical === 'Otro'">
-        <input class="input1" type="text" name="subject" ng-model="survey.otroEstilo"
-               ng-required="survey.estiloMusical === 'Otro'" placeholder="Especifica el estilo" />
+        <input class="input1" name="subject" ng-model="survey.otroEstilo" ng-required="survey.estiloMusical === 'Otro'"
+               placeholder="Especifica el estilo" type="text" />
         <span class="shadow-input1"></span>
       </div>
 
-      <div class="container-music1-form-btn">
-        <button type="submit" class="music1-form-btn"
-                ng-class="{'error-button': errorMessage === 'Email already exists', 'success-button': successMessage === 'Success'}">
-              <span>
+      <div class="container-music1-form-btn buttons row">
+        <button class="music1-form-btn column" ng-click="fetchResults()">Ver Resultados</button>
+        <button class="music1-form-btn column" ng-class="{'error-button': errorMessage === 'Email already exists', 'success-button': successMessage === 'Success'}"
+                type="submit">
+            <span>
               {{ errorMessage === 'Email already exists' ? 'Email already exists' : (successMessage === 'Success' ? 'Envio exitoso' : 'Enviar Encuesta') }}
-                <i class="fa fa-long-arrow-right"  aria-hidden="true"></i>
-              </span>
+              <i aria-hidden="true" class="fa fa-long-arrow-right"></i>
+            </span>
         </button>
       </div>
-
     </form>
+
+    <div ng-show="!showForm" style="position: relative; width: 100%">
+      <button class="close-chart music1-form-title" ng-click="closeChart()">X</button>
+      <canvas class="grow-animation" height="400" id="resultsChart" width="400"></canvas>
+    </div>
   </div>
 </div>
 <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-
 <script src="vendor/bootstrap/js/popper.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-
 <script src="vendor/select2/select2.min.js"></script>
-
 <script src="vendor/tilt/tilt.jquery.min.js"></script>
 <script>
   $(".js-tilt").tilt({
     scale: 1.1
   });
 </script>
-
 <script src="js/main.js"></script>
 </body>
 
