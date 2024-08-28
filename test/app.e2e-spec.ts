@@ -38,6 +38,7 @@ describe('SurveyController', () => {
   describe('create', () => {
     it('should create a new survey', async () => {
       const survey: SurveyEntity = {
+        id: 100,
         email: `${randomString(8)}@example.com`,
         estiloMusical: 'Rock',
       };
@@ -48,6 +49,7 @@ describe('SurveyController', () => {
 
     it('should throw an error if email already exists', async () => {
       const survey: SurveyEntity = {
+        id: 100,
         email: 'test@example.com',
         estiloMusical: 'Rock',
       };

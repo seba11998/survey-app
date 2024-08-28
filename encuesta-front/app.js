@@ -7,7 +7,6 @@ angular
 function EncuestaCtrl($scope, SurveyService, ChartFactory, $timeout) {
   $scope.showForm = true;
 
-  // Load genres on initialization
   SurveyService.getGenres()
     .then(function (styles) {
       $scope.styles = styles;
@@ -17,7 +16,6 @@ function EncuestaCtrl($scope, SurveyService, ChartFactory, $timeout) {
       console.error('Error loading genres:', error);
     });
 
-  // Function to send survey
   $scope.enviarEncuesta = function () {
     SurveyService.sendSurvey($scope.survey)
       .then(function () {
@@ -45,7 +43,6 @@ function EncuestaCtrl($scope, SurveyService, ChartFactory, $timeout) {
       });
   };
 
-  // Function to fetch results
   $scope.fetchResults = function () {
     SurveyService.getResults()
       .then(function (results) {
@@ -59,12 +56,10 @@ function EncuestaCtrl($scope, SurveyService, ChartFactory, $timeout) {
       });
   };
 
-  // Function to close chart
   $scope.closeChart = function () {
     $scope.showForm = true;
   };
 
-  // Function to display chart
   $scope.displayChart = function () {
     const ctx = document.getElementById('resultsChart').getContext('2d');
     const chartConfig = ChartFactory.createChartConfig($scope.results);
@@ -120,7 +115,7 @@ function ChartFactory() {
     );
 
     return {
-      type: 'pie',
+      type: 'bar',
       data: {
         labels: labels,
         datasets: [
@@ -136,8 +131,29 @@ function ChartFactory() {
         responsive: true,
         plugins: {
           legend: {
-            position: 'bottom',
+            position: 'right',
             labels: {
+              generateLabels: function (chart) {
+                const data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map((label, i) => {
+                    const meta = chart.getDatasetMeta(0);
+                    const ds = data.datasets[0];
+                    const value = ds.data[i];
+                    const backgroundColor = ds.backgroundColor[i];
+                    const borderColor = ds.borderColor[i];
+                    return {
+                      text: `${label}: ${value}`,
+                      fillStyle: backgroundColor,
+                      strokeStyle: borderColor,
+                      lineWidth: 1,
+                      hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                      index: i,
+                    };
+                  });
+                }
+                return [];
+              },
               font: {
                 size: 16,
                 weight: 'bold',

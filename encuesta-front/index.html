@@ -13,9 +13,6 @@
   <script src="vendor/angular/angular.min.js"></script>
   <script src="vendor/chart/chart.js"></script>
   <script src="app.js"></script>
-  <style>
-
-  </style>
 </head>
 
 <body ng-controller="EncuestaCtrl">
@@ -38,7 +35,7 @@
         <label for="estiloMusical" hidden="">Estilo Musical Favorito:</label>
         <select class="input1" id="estiloMusical" ng-model="survey.estiloMusical" ng-options="style for style in styles"
                 required>
-          <option selected="selected" value="">Selecciona un estilo</option>
+          <option selected="selected" value="" disabled>Selecciona un estilo</option>
         </select>
         <span class="shadow-input1"></span>
       </div>
@@ -51,7 +48,8 @@
 
       <div class="container-music1-form-btn buttons row">
         <button class="music1-form-btn column" ng-click="fetchResults()">Ver Resultados</button>
-        <button class="music1-form-btn column" ng-class="{'error-button': errorMessage === 'Email already exists', 'success-button': successMessage === 'Success'}"
+        <button class="music1-form-btn column"
+                ng-class="{'error-button': errorMessage === 'Email already exists', 'success-button': successMessage === 'Success'}"
                 type="submit">
             <span>
               {{ errorMessage === 'Email already exists' ? 'Email already exists' : (successMessage === 'Success' ? 'Envio exitoso' : 'Enviar Encuesta') }}
@@ -61,9 +59,9 @@
       </div>
     </form>
 
-    <div ng-show="!showForm" style="position: relative; width: 100%">
+    <div ng-show="!showForm" class="chart-board">
       <button class="close-chart music1-form-title" ng-click="closeChart()">X</button>
-      <canvas class="grow-animation" height="400" id="resultsChart" width="400"></canvas>
+      <canvas class="grow-animation" height="400" width="400" id="resultsChart"></canvas>
     </div>
   </div>
 </div>

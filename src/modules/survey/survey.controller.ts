@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { SurveyService } from './survey.service';
 import { SurveyEntity } from './survey.entity';
 
@@ -8,7 +15,11 @@ export class SurveyController {
 
   @Post()
   async create(@Body() survey: SurveyEntity) {
-    return this.surveyService.create(survey);
+    try {
+      return await this.surveyService.create(survey);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Get('results')

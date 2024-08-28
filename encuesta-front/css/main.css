@@ -315,6 +315,11 @@ textarea.input1 + .shadow-input1 {
     }
 }
 
+.chart-board {
+    position: relative;
+    width: 100%
+}
+
 /*---------------------------------------------*/
 .container-music1-form-btn {
     display: -webkit-box;

@@ -20,6 +20,7 @@
     return check;
   });
 
+
   $('.validate-form .input1').each(function () {
     $(this).focus(function () {
       hideValidate(this);
@@ -38,3 +39,5 @@
     $(thisAlert).removeClass('alert-validate');
   }
 })(jQuery);
+
+
