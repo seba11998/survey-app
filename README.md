@@ -1,99 +1,104 @@
-# Encuesta App
+# Survey Application
 
-A survey application built with NestJS, TypeORM, and MySQL.
+This project is a survey application built using NestJS, TypeORM, and AngularJS for the purpose of technical testing. The application allows users to submit surveys about their favorite musical styles and view aggregated results.
+## Table of Contents
+
+- [Technical Requirements](#Technical-requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Technologies Used](#technologies-used)
+
+## Technical Requirements
+
+- **Node.js**: Version 20.14 or higher
+- **MySQL**: Version 8 or higher
+- **NestJS**: Version 10.x or higher
 
 ## Installation
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd encuesta-app
+   git clone https://github.com/sramosUMayor/survey-app.git
+   cd survey-app
    ```
 
-2. Install dependencies:
+2. Install server dependencies:
    ```bash
    npm install
    ```
 
-## Running the Application
-
-1. Set up the environment variables. Create a `.env` file in the root directory and add the following:
-   ```dotenv
-   DB_HOST=
-   DB_PORT=
-   DB_USERNAME=
-   DB_PASSWORD=
-   DB_DATABASE=
+3. Set up environment variables:
+   Create a `.env` file or rename the `.env.sample` file in the root directory and add the following:
+   ```env
+   DB_HOST=your_database_host
+   DB_PORT=your_database_port
+   DB_USERNAME=your_database_username
+   DB_PASSWORD=your_database_password
+   DB_DATABASE=your_database_name
    ```
 
-2. Start the application:
+4. Run the server:
    ```bash
    npm run start
    ```
 
-3. The application will be available at `http://localhost:3000`.
-
-## Project Structure
-
-- `src/`: Source code
-    - `modules/`: Application modules
-        - `survey/`: Survey module
-        - `results/`: Results module
-        - `database/`: Database module
-    - `main.ts`: Entry point of the application
-    - `app.module.ts`: Root module of the application
-- `test/`: Test files
-- `.env`: Environment variables file
-- `package.json`: Project configuration and dependencies
-
-## Frontend
-
-The frontend of the application is built using AngularJS.
-
-### Structure
-
-- `encuesta-front/`: Frontend source code
-    - `index.html`: Main HTML file
-    - `app.js`: AngularJS application logic
-    - `css/`: Stylesheets
-    - `vendor/`: Third-party libraries
-
-### Running the Frontend
-
-1. Navigate to the `encuesta-front` directory:
+5. Navigate to the `encuesta-front` directory and install client dependencies:
    ```bash
    cd encuesta-front
+   npx http-client -o
    ```
 
-2. Open `index.html` with a static http server.
+6. Open `index.html` in your browser to view the application.
 
-   ```bash
-   npx http-server -o
-   ```
+## Usage
 
-### Dependencies
+- **Submit a Survey**: Fill out the survey form with your email and favorite musical style, then click "Enviar Encuesta".
+- **View Results**: Click "Ver Resultados" to see the aggregated survey results.
 
-- AngularJS
-- Bootstrap
-- Font Awesome
-- jQuery
-- Select2
-- Tilt.js
+## API Endpoints
 
-### Styles
+### POST /api/survey
 
-- `css/util.css`: Utility styles
-- `css/main.css`: Main styles
+Create a new survey entry.
 
-### Scripts
+- **Request Body**:
+  ```json
+  {
+    "email": "user@example.com",
+    "estiloMusical": "Rock"
+  }
+  ```
 
-- `app.js`: AngularJS application logic
-- `vendor/jquery/jquery-3.2.1.min.js`: jQuery library
-- `vendor/bootstrap/js/popper.js`: Popper.js library
-- `vendor/bootstrap/js/bootstrap.min.js`: Bootstrap library
-- `vendor/select2/select2.min.js`: Select2 library
-- `vendor/tilt/tilt.jquery.min.js`: Tilt.js library
+- **Response**:
+  ```json
+  {
+    "id": 1,
+    "email": "user@example.com",
+    "estiloMusical": "Rock"
+  }
+  ```
 
+### GET /api/survey/results
 
+Retrieve all survey results grouped by musical style.
 
+- **Response**:
+  ```json
+  [
+    {
+      "estiloMusical": "Rock",
+      "count": 10
+    },
+    {
+      "estiloMusical": "Pop",
+      "count": 8
+    }
+  ]
+  ```
 
+## Technologies Used
+
+- **Backend**: NestJS, TypeORM, MySQL
+- **Frontend**: AngularJS, Bootstrap
+- **Other**: dotenv
