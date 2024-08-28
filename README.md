@@ -58,7 +58,7 @@ This project is a survey application built using NestJS, TypeORM, and AngularJS 
 
 ## API Endpoints
 
-### POST /api/survey
+### POST `/api/survey`
 
 Create a new survey entry.
 
@@ -79,7 +79,7 @@ Create a new survey entry.
   }
   ```
 
-### GET /api/survey/results
+### GET `/api/survey/results`
 
 Retrieve all survey results grouped by musical style.
 
